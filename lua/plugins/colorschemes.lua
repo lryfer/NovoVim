@@ -1,12 +1,12 @@
 return{
-  "ellisonleao/gruvbox.nvim",
+  "rebelot/kanagawa.nvim",
   lazy = false,
   priority = 1000,
   opts = {
   },
   config = function()
-    vim.o.background = "dark" -- or "light" for light mode
-    vim.cmd([[colorscheme gruvbox]])
+    vim.o.background = "dark" 
+    vim.cmd([[colorscheme kanagawa]])
   end,
 }
 
