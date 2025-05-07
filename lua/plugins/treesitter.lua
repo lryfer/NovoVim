@@ -7,7 +7,7 @@ return {
         event = "BufRead",
         config = function()
         require'nvim-treesitter.configs'.setup {
-        ensure_installed = {"c", "cpp", "rust", "lua", "markdown"},
+        ensure_installed = {"c", "cpp", "rust", "lua", "markdown", "html"},
         auto_install = true,
         highlight = {
           enable = true,
