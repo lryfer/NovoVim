@@ -1,4 +1,5 @@
-require("core.custom_bind");
-require("core.lazy");
-require("core.ui");
+require("core.options")
+require("core.lazy")
+require("core.custom_bind")
 require("core.lsp-settings")
+require("core.diagnostic")
