@@ -46,27 +46,7 @@ return {
 			TypeParameter = "󰅲",
 		}
 
-		local function safe(v, fallback)
-			return (v == nil or v == "") and fallback or v
-		end
-
-		local function readable_fg(bg)
-			if not bg or #bg < 7 then
-				return "#000000"
-			end
-			local r = tonumber(bg:sub(2, 3), 16)
-			local g = tonumber(bg:sub(4, 5), 16)
-			local b = tonumber(bg:sub(6, 7), 16)
-			local luminance = (0.299 * r + 0.587 * g + 0.114 * b)
-			if luminance > 160 then
-				return "#000000" -- sfondo chiaro → testo nero
-			else
-				return "#ffffff" -- sfondo scuro → testo bianco
-			end
-		end
-		local FIXED_WIDTH = 12 -- larghezza totale del box
-
-		local FIXED_WIDTH = 14 -- aumenta per fare spazio all'icona
+		local FIXED_WIDTH = 14
 
 		local function darken(color, percent)
 			local r = tonumber(color:sub(2, 3), 16)
