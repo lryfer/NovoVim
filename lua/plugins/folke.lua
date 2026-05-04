@@ -7,7 +7,7 @@ return {
 			"rcarriga/nvim-notify",
 			config = function()
 				require("notify").setup({
-					timeout = 1000,
+					timeout = 10000,
 					stages = "static",
 					background_colour = "#000000",
 					render = "minimal",
@@ -27,7 +27,7 @@ return {
 		},
 		routes = {
 			{ filter = { event = "notify", find = "No information available" }, opts = { skip = true } },
-			{ filter = { event = "msg_show", kind = "info" }, opts = { skip = true } },
+			{ filter = { event = "msg_show", kind = "info" }, opts = { skip = false } },
 			{ filter = { event = "msg_show", find = "written" }, opts = { skip = true } },
 		},
 		presets = {
