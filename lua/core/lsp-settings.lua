@@ -1,2 +1,0 @@
--- LSP configuration is now handled in plugins/mason-lspconfig.lua
--- This file is kept for backwards compatibility but is empty

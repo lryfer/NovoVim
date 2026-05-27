@@ -7,7 +7,7 @@ return {
 			"rcarriga/nvim-notify",
 			config = function()
 				require("notify").setup({
-					timeout = 10000,
+					timeout = 1000,
 					stages = "static",
 					background_colour = "#000000",
 					render = "minimal",

@@ -6,8 +6,8 @@ return {
 			require("mason").setup({
 				ui = {
 					icons = {
-						package_installed = "✓",
-						package_pending = "➜",
+						package_installed   = "✓",
+						package_pending     = "➜",
 						package_uninstalled = "✗",
 					},
 				},
@@ -18,10 +18,11 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = { "mason.nvim", "neovim/nvim-lspconfig" },
 		config = function()
+			local loader = require("lang.loader")
 			require("mason-lspconfig").setup({
-				ensure_installed = { "clangd", "html", "cssls", "pyright", "lua_ls", "rust_analyzer", "svelte" },
+				ensure_installed      = loader.lsp_server_names(),
 				automatic_installation = true,
-				automatic_enable = true,
+				automatic_enable      = false,
 			})
 		end,
 	},
@@ -30,75 +31,47 @@ return {
 		lazy = false,
 		priority = 100,
 		config = function()
-			-- Use Neovim 0.11+ native API
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local loader   = require("lang.loader")
+			local lsp_diag = require("core.diagnostic")
 
-			-- on_attach hook for all servers
-			local on_attach = function(client, bufnr)
-				local opts = { buffer = bufnr, silent = true }
+			-- LspAttach fires reliably for every client regardless of how
+			-- the server was started, unlike on_attach in vim.lsp.config("*").
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(args)
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					if not client then return end
+					local bufnr   = args.buf
+					local root_dir = client.config.root_dir or vim.fn.getcwd()
+					lsp_diag.register_client(client, root_dir)
 
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-				vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-				vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-				vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
-				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-				vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts)
-				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-				vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-				vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-				vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+					local opts = { buffer = bufnr, silent = true }
+					vim.keymap.set("n", "K",          vim.lsp.buf.hover,           opts)
+					vim.keymap.set("n", "gd",         vim.lsp.buf.definition,      opts)
+					vim.keymap.set("n", "gD",         vim.lsp.buf.declaration,     opts)
+					vim.keymap.set("n", "gi",         vim.lsp.buf.implementation,  opts)
+					vim.keymap.set("n", "gr",         vim.lsp.buf.references,      opts)
+					vim.keymap.set("n", "gt",         vim.lsp.buf.type_definition, opts)
+					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action,     opts)
+					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename,          opts)
+					vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help,  opts)
+					vim.keymap.set("n", "[d",         vim.diagnostic.goto_prev,    opts)
+					vim.keymap.set("n", "]d",         vim.diagnostic.goto_next,    opts)
+					vim.keymap.set("n", "<leader>e",  vim.diagnostic.open_float,   opts)
+					vim.keymap.set("n", "<leader>q",  vim.diagnostic.setloclist,   opts)
+				end,
+			})
+
+			-- Capabilities set globally; no on_attach here (handled by LspAttach above)
+			vim.lsp.config("*", {
+				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			})
+
+			-- Per-server opts from lang definitions (merged with global)
+			for name, opts in pairs(loader.lsp_servers()) do
+				vim.lsp.config(name, opts)
 			end
 
-			local servers = {
-				lua_ls = {
-					settings = {
-						Lua = {
-							runtime = { version = "LuaJIT" },
-							diagnostics = { globals = { "vim" } },
-							workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-							telemetry = { enable = false },
-						},
-					},
-				},
-				clangd = {
-					cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
-					init_options = {
-						clangdFileStatus = true,
-						usePlaceholders = true,
-						completeUnimplementedMethods = true,
-					},
-				},
-				html = {
-					settings = {
-						html = {
-							format = {
-								templating = true,
-								wrapLineLength = 120,
-								wrapAttributes = "auto",
-							},
-							hover = {
-								documentation = true,
-								references = true,
-							},
-						},
-					},
-				},
-				cssls = {},
-				pyright = {},
-			}
-
-			-- Configure servers using native Neovim 0.11+ API
-			for server_name, config_opts in pairs(servers) do
-				config_opts.capabilities = capabilities
-				config_opts.on_attach = on_attach
-				vim.lsp.config(server_name, config_opts)
-			end
-
-			-- Enable all configured servers
-			vim.lsp.enable(vim.tbl_keys(servers))
+			vim.lsp.enable(loader.lsp_server_names())
 		end,
 	},
 }
