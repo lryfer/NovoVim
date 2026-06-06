@@ -7,10 +7,11 @@ return {
 			"rcarriga/nvim-notify",
 			config = function()
 				require("notify").setup({
-					timeout = 1000,
-					stages = "static",
+					timeout          = 1000,
+					stages           = "static",
 					background_colour = "#000000",
-					render = "minimal",
+					render           = "minimal",
+					max_width        = 60,
 				})
 				vim.notify = require("notify")
 			end,
@@ -20,28 +21,29 @@ return {
 		lsp = {
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-				["vim.lsp.util.stylize_markdown"] = true,
-				["cmp.entry.get_documentation"] = true,
+				["vim.lsp.util.stylize_markdown"]                = true,
+				["cmp.entry.get_documentation"]                  = true,
 			},
 			progress = { enabled = false },
 		},
 		routes = {
-			{ filter = { event = "notify", find = "No information available" }, opts = { skip = true } },
-			{ filter = { event = "msg_show", kind = "info" }, opts = { skip = false } },
-			{ filter = { event = "msg_show", find = "written" }, opts = { skip = true } },
+			{ filter = { event = "notify",   find = "No information available" }, opts = { skip = true } },
+			{ filter = { event = "msg_show", find = "written"                  }, opts = { skip = true } },
+			{ filter = { event = "msg_show", find = "search hit BOTTOM"        }, opts = { skip = true } },
+			{ filter = { event = "msg_show", find = "search hit TOP"           }, opts = { skip = true } },
+			{ filter = { event = "msg_show", kind = "search_count"             }, opts = { skip = true } },
+			{ filter = { event = "msg_show", kind = "wmsg"                     }, opts = { skip = true } },
 		},
 		presets = {
-			bottom_search = true,
-			command_palette = true,
+			bottom_search        = true,
+			command_palette      = true,
 			long_message_to_split = true,
-			inc_rename = false,
-			lsp_doc_border = false,
+			inc_rename           = false,
+			lsp_doc_border       = false,
 		},
 		popupmenu = {
 			backend = "nui",
-			border = {
-				style = "single",
-			},
+			border  = { style = "single" },
 		},
 	},
 }
