@@ -212,30 +212,30 @@ return {
 	-- },
 
 	-- ── Embedded / Bare-metal (GDB remote) ────────────────────────────────────
-	-- Uncomment to add embedded debug configs to the C/C++ filetype.
+	-- Adds embedded debug configs to the C/C++ filetype.
 	-- Set vim.g.embedded_gdb = "arm-none-eabi-gdb" (or riscv-none-elf-gdb,
 	-- avr-gdb, etc.) in a project-local .nvim.lua to pick the right toolchain.
-	-- Start your GDB server separately with :EmbeddedServer or externally,
-	-- then launch a debug session with <leader>dc and pick one of these configs.
-	-- {
-	-- 	dap_configs = {
-	-- 		c = {
-	-- 			{
-	-- 				name    = "Attach to GDB server",
-	-- 				type    = "gdb",
-	-- 				request = "attach",
-	-- 				program = function()
-	-- 					return vim.fn.input("ELF: ", vim.fn.getcwd() .. "/", "file")
-	-- 				end,
-	-- 				target = function()
-	-- 					return vim.fn.input("Server address (host:port): ", "localhost:3333")
-	-- 				end,
-	-- 				cwd            = "${workspaceFolder}",
-	-- 				stopAtBeginningOfMainSubprogram = false,
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
+	-- Start your GDB server separately (openocd, JLinkGDBServer, pyocd, etc.),
+	-- then launch a debug session with <leader>dc and pick "Attach to GDB server".
+	{
+		dap_configs = {
+			c = {
+				{
+					name    = "Attach to GDB server",
+					type    = "gdb",
+					request = "attach",
+					program = function()
+						return vim.fn.input("ELF: ", vim.fn.getcwd() .. "/", "file")
+					end,
+					target = function()
+						return vim.fn.input("Server address (host:port): ", "localhost:3333")
+					end,
+					cwd            = "${workspaceFolder}",
+					stopAtBeginningOfMainSubprogram = false,
+				},
+			},
+		},
+	},
 
 	-- ── ASM (x86 / x86_64 / ARM / RISC-V) ─────────────────────────────────────
 	{

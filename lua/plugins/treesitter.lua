@@ -9,7 +9,7 @@ return {
 			return get_node_text(node, ...)
 		end
 
-		local loader = require("lang.loader")
+		local loader = require("languages.language_loader")
 
 		require("nvim-treesitter.configs").setup({
 			ensure_installed = loader.treesitter_parsers(),

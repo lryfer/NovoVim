@@ -23,7 +23,7 @@ return {
 	config = function()
 		local dap    = require("dap")
 		local dapui  = require("dapui")
-		local loader = require("lang.loader")
+		local loader = require("languages.language_loader")
 
 		-- ── Adapters (mason-nvim-dap handles paths automatically) ────────────────
 		require("mason-nvim-dap").setup({

@@ -18,7 +18,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = { "mason.nvim", "neovim/nvim-lspconfig" },
 		config = function()
-			local loader = require("lang.loader")
+			local loader = require("languages.language_loader")
 			require("mason-lspconfig").setup({
 				ensure_installed      = loader.lsp_server_names(),
 				automatic_installation = true,
@@ -31,7 +31,7 @@ return {
 		lazy = false,
 		priority = 100,
 		config = function()
-			local loader   = require("lang.loader")
+			local loader   = require("languages.language_loader")
 			local lsp_diag = require("core.diagnostic")
 
 			-- LspAttach fires reliably for every client regardless of how

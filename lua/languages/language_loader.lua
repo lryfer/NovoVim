@@ -2,7 +2,7 @@ local M = {}
 local _langs
 
 local function langs()
-	if not _langs then _langs = require("lang") end
+	if not _langs then _langs = require("languages.language_configurations") end
 	return _langs
 end
 

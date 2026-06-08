@@ -7,7 +7,7 @@ return {
 	},
 	event = "VeryLazy",
 	config = function()
-		local loader = require("lang.loader")
+		local loader = require("languages.language_loader")
 
 		local tools = loader.mason_tools()
 		vim.list_extend(tools, loader.dap_tools())
