@@ -63,10 +63,9 @@ return {
 					"--smart-case",
 					"--max-columns=150",
 					"--max-columns-preview",
-					"--max-filesize=300K",  -- salta file grandi (binari generati, ecc.)
-					"--threads=4",          -- limita l'uso CPU su progetti enormi
-					-- rimossi --hidden e --follow: costosi su repo grandi
-					"--glob=!**/.git/*",
+					"--max-filesize=300K",
+					"--threads=6",
+          "--glob=!**/.git/*",
 					"--glob=!**/target/*",
 					"--glob=!**/node_modules/*",
 					"--glob=!**/.metadata/*",
@@ -74,7 +73,6 @@ return {
 					"--glob=!**/bin/*",
 					"--glob=!**/dist/*",
 					"--glob=!**/.cache/*",
-					-- output di build MCU/Eclipse
 					"--glob=!**/Debug/*",
 					"--glob=!**/Release/*",
 					"--glob=!**/*.o",
@@ -84,7 +82,6 @@ return {
 					"--glob=!**/*.map",
 					"--glob=!**/*.lst",
 					"--glob=!**/*.axf",
-					-- file generali non testuali
 					"--glob=!*.min.js",
 					"--glob=!*.min.css",
 					"--glob=!*.lock",
