@@ -34,6 +34,11 @@
 `<leader>fg` live grep
 `<leader>fb` buffers
 `<leader>fh` help tags
+`<leader>fn` notification history
+`<leader>gd` git diff (changed files)
+`<leader>gc` git commits
+`<leader>gb` git branches
+`<leader>gs` git stash
 
 ## File Tree
 `<leader>tt` toggle tree
@@ -57,10 +62,14 @@
 `<leader>dn` step over
 `<leader>ds` step into
 `<leader>do` step out
+`<leader>dx` terminate session
+`<leader>dq` quit debug (terminate + close UI)
+`<leader>dX` force close debug
 `<leader>dd` toggle UI
 `<leader>dr` REPL
 `<leader>de` evaluate expression
 `<F9>` toggle breakpoint
+`q` close DAP window (when inside DAP UI)
 
 ## Completion
 `<C-n>` `<C-p>` navigate
@@ -71,4 +80,5 @@
 
 ## Custom Commands
 `:BearFind` generate compile_commands.json from build system
-`:Crlf` convert CRLF to LF
+`:CrlfStripper` convert CRLF to LF
+`:CrlfAdder` convert LF to CRLF

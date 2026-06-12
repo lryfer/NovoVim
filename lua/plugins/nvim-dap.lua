@@ -16,6 +16,15 @@ return {
 		{ "<F9>",       function() require("dap").toggle_breakpoint()                 end, desc = "Toggle Breakpoint" },
 		{ "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Condition: ")) end, desc = "Conditional Breakpoint" },
 		{ "<leader>dx", function() require("dap").terminate()                         end, desc = "Terminate" },
+		{ "<leader>dq", function()
+			require("dap").terminate()
+			require("dapui").close()
+		end, desc = "Quit Debug (terminate + close UI)" },
+		{ "<leader>dX", function()
+			require("dap").disconnect({ terminateDebuggee = true })
+			require("dap").close()
+			require("dapui").close()
+		end, desc = "Force Close Debug" },
 		{ "<leader>dd", function() require("dapui").toggle()                          end, desc = "Toggle UI" },
 		{ "<leader>dr", function() require("dap").repl.open()                         end, desc = "Open REPL" },
 		{ "<leader>de", function() require("dapui").eval()                            end, mode = { "n", "v" }, desc = "Evaluate expression" },
@@ -25,14 +34,12 @@ return {
 		local dapui  = require("dapui")
 		local loader = require("languages.language_loader")
 
-		-- ── Adapters (mason-nvim-dap handles paths automatically) ────────────────
 		require("mason-nvim-dap").setup({
 			ensure_installed  = loader.dap_tools(),
 			automatic_setup   = true,
 			handlers          = {},
 		})
 
-		-- Python: nvim-dap-python provides richer adapter + test integration
 		require("dap-python").setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python")
 
 		-- Generic GDB remote adapter for embedded / bare-metal targets.
@@ -120,6 +127,19 @@ return {
 		dap.listeners.before.launch.dapui_config        = function() dapui.open() end
 		dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
 		dap.listeners.before.event_exited.dapui_config  = function() dapui.close() end
+
+		-- Add 'q' to close DAP UI windows
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "dap-repl", "dapui_console", "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes" },
+			callback = function(args)
+				vim.keymap.set("n", "q", function()
+					local win = vim.api.nvim_get_current_win()
+					if vim.api.nvim_win_is_valid(win) then
+						vim.api.nvim_win_close(win, true)
+					end
+				end, { buffer = args.buf, desc = "Close DAP window" })
+			end,
+		})
 
 		-- ── Mouse click on sign column to toggle breakpoint ─────────────────────
 		vim.keymap.set("n", "<LeftMouse>", function()

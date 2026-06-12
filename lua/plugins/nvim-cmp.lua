@@ -17,7 +17,7 @@ return {
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
-		-- Define icons and colors for different completion types
+
 		local kind_icons = {
 			Text = "󰉿",
 			Method = "󰆧",
@@ -61,13 +61,9 @@ return {
 		end
 		local function format_kind(entry, vim_item)
 			local kind = vim_item.kind
-
-			local icon = kind_icons[kind] or "?" -- icona
-			local label = string.lower(kind) -- testo
-
-			local content = icon .. " " .. label -- "󰊕 function"
-
-			-- padding per larghezza uniforme
+			local icon = kind_icons[kind] or "?"
+			local label = string.lower(kind)
+			local content = icon .. " " .. label
 			local padding = FIXED_WIDTH - vim.fn.strdisplaywidth(content)
 			if padding < 0 then
 				padding = 0
@@ -82,7 +78,6 @@ return {
 			return vim_item
 		end
 
-		-- Setup formatting with icons and colors
 		cmp.setup({
 			snippet = {
 				expand = function(args)
@@ -164,7 +159,7 @@ return {
 				local normal_bg = hl_bg("Normal") or "#1e1e1e"
 
 				vim.api.nvim_set_hl(0, "CmpNormal", {
-					bg = darken(normal_bg, 0.15), -- 15% più scuro
+					bg = darken(normal_bg, 0.15),
 					fg = hl_fg("Normal") or "#ffffff",
 				})
 
@@ -213,7 +208,6 @@ return {
 					end
 				end
 
-				-- crea highlight dinamici
 				for kind, color in pairs(palette) do
 					local fg = readable(color)
 
@@ -229,13 +223,12 @@ return {
 					})
 				end
 
-				-- riga selezionata CMP
 				vim.api.nvim_set_hl(0, "CmpSelection", {
 					bg = hl_bg("Visual") or "#444444",
 				})
 			end,
 		})
-		-- Setup cmp highlights with theme colors
+
 		vim.cmd("doautocmd ColorScheme")
 	end,
 }

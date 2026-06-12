@@ -11,7 +11,6 @@ return {
 		{
 			"<leader>ff",
 			function()
-				-- pcall chiamava git_files due volte: ora apre una volta sola
 				local ok = pcall(require("telescope.builtin").git_files, { show_untracked = true })
 				if not ok then
 					require("telescope.builtin").find_files()
@@ -46,6 +45,35 @@ return {
 				require("telescope").extensions.notify.notify()
 			end,
 			desc = "Notification history",
+		},
+		-- Git commands
+		{
+			"<leader>gd",
+			function()
+				require("telescope.builtin").git_status()
+			end,
+			desc = "Git diff (changed files)",
+		},
+		{
+			"<leader>gc",
+			function()
+				require("telescope.builtin").git_commits()
+			end,
+			desc = "Git commits",
+		},
+		{
+			"<leader>gb",
+			function()
+				require("telescope.builtin").git_branches()
+			end,
+			desc = "Git branches",
+		},
+		{
+			"<leader>gs",
+			function()
+				require("telescope.builtin").git_stash()
+			end,
+			desc = "Git stash",
 		},
 	},
 	config = function()

@@ -1,4 +1,3 @@
--- Suppress deprecation warnings
 local notify = vim.notify
 vim.notify = function(msg, level, opts)
 	if msg:match("is deprecated") then
