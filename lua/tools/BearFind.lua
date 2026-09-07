@@ -1,18 +1,10 @@
--- Searches nvim's cwd (up to 5 levels deep),
--- generates compile_commands.json via bear or native export.
---
--- Supported: CMakeLists.txt, meson.build, Makefile/GNUmakefile, build.ninja, SConstruct, wscript
---
--- Uses Telescope to let you pick which build file to use if multiple are found.
-
-local M = {}
+local BearFind_Module = {}
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 local conf = require("telescope.config").values
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 
--- Priority order: native exporters first, then bear-wrapped builders
 local BUILD_FILES = {
 	{ name = "CMakeLists.txt", kind = "cmake" },
 	{ name = "meson.build", kind = "meson" },
@@ -75,7 +67,7 @@ local handlers = {
 
 	make = function(dir)
 		-- -B forces rebuild so bear intercepts all compiler calls even if already built
-		-- -k keeps going if a target fails (e.g. missing linker libs on embedded)
+		-- -k keeps going if a target fails
 		notify("Running: bear -- make -B -k -C " .. dir)
 		vim.fn.jobstart({ "bear", "--", "make", "-B", "-k", "-C", dir }, {
 			cwd = dir,
@@ -121,7 +113,6 @@ local handlers = {
 	end,
 }
 
--- Find all build files and return them with metadata
 local function find_all_build_files(max_depth)
 	local cwd = vim.fn.getcwd()
 	local found_files = {}
@@ -152,18 +143,16 @@ local function find_all_build_files(max_depth)
 		end
 	end
 
-	-- Sort by depth (shallower first), then by name
+-- Sort by name and depth
 	table.sort(found_files, function(a, b)
 		if a.depth == b.depth then
 			return a.name < b.name
 		end
 		return a.depth < b.depth
 	end)
-
 	return found_files
 end
 
--- Show Telescope picker with all found build files
 local function show_picker(build_files)
 	pickers
 		.new({}, {
@@ -201,7 +190,7 @@ local function show_picker(build_files)
 		:find()
 end
 
-function M.run(opts)
+function BearFind_Module.run(opts)
 	opts = opts or {}
 	local max_depth = opts.max_depth or 5
 
@@ -213,18 +202,16 @@ function M.run(opts)
 	end
 
 	if #build_files == 1 then
-		-- Only one found, use it directly
 		local entry = build_files[1]
 		notify("Found " .. entry.name .. " → using " .. entry.kind)
 		handlers[entry.kind](entry.dir)
 	else
-		-- Multiple found, show picker
 		show_picker(build_files)
 	end
 end
 
 vim.api.nvim_create_user_command("BearFind", function()
-	M.run()
+	BearFind_Module.run()
 end, { desc = "Find build system and generate compile_commands.json, then restart clangd" })
 
-return M
+return BearFind_Module

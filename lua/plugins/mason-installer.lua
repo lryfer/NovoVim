@@ -7,11 +7,6 @@ return {
 	},
 	event = "VeryLazy",
 	config = function()
-		local loader = require("languages.language_loader")
-
-		local tools = loader.mason_tools()
-		vim.list_extend(tools, loader.dap_tools())
-
 		require("mason-tool-installer").setup({
 			ensure_installed = tools,
 			auto_update      = false,

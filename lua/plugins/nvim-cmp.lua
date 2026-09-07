@@ -18,34 +18,34 @@ return {
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 
-		local kind_icons = {
-			Text = "󰉿",
-			Method = "󰆧",
-			Function = "󰊕",
-			Constructor = "󰒓",
-			Field = "󰜢",
-			Variable = "󰀫",
-			Class = "󰠱",
-			Interface = "󰕘",
-			Module = "󰕳",
-			Property = "󰓹",
-			Unit = "󰑭",
-			Value = "󰎠",
-			Enum = "󰎦",
-			Keyword = "󰌋",
-			Snippet = "󰘍",
-			Color = "󰏘",
-			File = "󰈙",
-			Reference = "󰈇",
-			Folder = "󰉋",
-			EnumMember = "󰜶",
-			Constant = "󰏿",
-			Struct = "󰙅",
-			Event = "󰉁",
-			Operator = "󰆕",
-			TypeParameter = "󰅲",
-		}
-
+    local kind_icons = {
+      Text = vim.g.nvim_cmp_Icon_Text,
+      Method = vim.g.nvim_cmp_Icon_Method,
+      Function = vim.g.nvim_cmp_Icon_Function,
+      Constructor = vim.g.nvim_cmp_Icon_Constructor,
+      Field = vim.g.nvim_cmp_Icon_Field,
+      Variable = vim.g.nvim_cmp_Icon_Variable,
+      Class = vim.g.nvim_cmp_Icon_Class,
+      Interface = vim.g.nvim_cmp_Icon_Interface,
+      Module = vim.g.nvim_cmp_Icon_Module,
+      Property = vim.g.nvim_cmp_Icon_Property,
+      Unit = vim.g.nvim_cmp_Icon_Unit,
+      Value = vim.g.nvim_cmp_Icon_Value,
+      Enum = vim.g.nvim_cmp_Icon_Enum,
+      Keyword = vim.g.nvim_cmp_Icon_Keyword,
+      Snippet = vim.g.nvim_cmp_Icon_Snippet,
+      Color = vim.g.nvim_cmp_Icon_Color,
+      File = vim.g.nvim_cmp_Icon_File,
+      Reference = vim.g.nvim_cmp_Icon_Reference,
+      Folder = vim.g.nvim_cmp_Icon_Folder,
+      EnumMember = vim.g.nvim_cmp_Icon_EnumMember,
+      Constant = vim.g.nvim_cmp_Icon_Constant,
+      Struct = vim.g.nvim_cmp_Icon_Struct,
+      Event = vim.g.nvim_cmp_Icon_Event,
+      Operator = vim.g.nvim_cmp_Icon_Operator,
+      TypeParameter = vim.g.nvim_cmp_Icon_TypeParameter,
+    }
+    
 		local FIXED_WIDTH = 14
 
 		local function darken(color, percent)

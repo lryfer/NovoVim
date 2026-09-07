@@ -1,77 +1,92 @@
 return {
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		build = ":MasonUpdate",
+
 		config = function()
 			require("mason").setup({
 				ui = {
 					icons = {
-						package_installed   = "✓",
-						package_pending     = "➜",
-						package_uninstalled = "✗",
+						package_installed = vim.g.Mason_Icon_package_installed,
+						package_pending = vim.g.Mason_Icon_package_pending,
+						package_uninstalled = vim.g.Mason_Icon_package_uninstalled,
 					},
 				},
 			})
 		end,
 	},
+
 	{
-		"williamboman/mason-lspconfig.nvim",
-		dependencies = { "mason.nvim", "neovim/nvim-lspconfig" },
+		"mason-org/mason-lspconfig.nvim",
+
+		dependencies = {
+			"mason-org/mason.nvim",
+			"neovim/nvim-lspconfig",
+		},
+
 		config = function()
-			local loader = require("languages.language_loader")
+			local servers = {}
+
+			local language_servers = {
+				vim.g.c_language_server,
+				vim.g.lua_language_server,
+			}
+
+			for _, server in ipairs(language_servers) do
+				if server and server ~= "" then
+					table.insert(servers, server)
+				end
+			end
+
 			require("mason-lspconfig").setup({
-				ensure_installed      = loader.lsp_server_names(),
+				ensure_installed = servers,
 				automatic_installation = true,
-				automatic_enable      = false,
-			})
-		end,
-	},
-	{
-		"neovim/nvim-lspconfig",
-		lazy = false,
-		priority = 100,
-		config = function()
-			local loader   = require("languages.language_loader")
-			local lsp_diag = require("core.diagnostic")
-
-			-- LspAttach fires reliably for every client regardless of how
-			-- the server was started, unlike on_attach in vim.lsp.config("*").
-			vim.api.nvim_create_autocmd("LspAttach", {
-				callback = function(args)
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
-					if not client then return end
-					local bufnr   = args.buf
-					local root_dir = client.config.root_dir or vim.fn.getcwd()
-					lsp_diag.register_client(client, root_dir)
-
-					local opts = { buffer = bufnr, silent = true }
-					vim.keymap.set("n", "K",          vim.lsp.buf.hover,           opts)
-					vim.keymap.set("n", "gd",         vim.lsp.buf.definition,      opts)
-					vim.keymap.set("n", "gD",         vim.lsp.buf.declaration,     opts)
-					vim.keymap.set("n", "gi",         vim.lsp.buf.implementation,  opts)
-					vim.keymap.set("n", "gr",         vim.lsp.buf.references,      opts)
-					vim.keymap.set("n", "gt",         vim.lsp.buf.type_definition, opts)
-					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action,     opts)
-					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename,          opts)
-					vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help,  opts)
-					vim.keymap.set("n", "[d",         vim.diagnostic.goto_prev,    opts)
-					vim.keymap.set("n", "]d",         vim.diagnostic.goto_next,    opts)
-					vim.keymap.set("n", "<leader>e",  vim.diagnostic.open_float,   opts)
-					vim.keymap.set("n", "<leader>q",  vim.diagnostic.setloclist,   opts)
-				end,
+				automatic_enable = false,
 			})
 
-			-- Capabilities set globally; no on_attach here (handled by LspAttach above)
 			vim.lsp.config("*", {
 				capabilities = require("cmp_nvim_lsp").default_capabilities(),
 			})
 
-			-- Per-server opts from lang definitions (merged with global)
-			for name, opts in pairs(loader.lsp_servers()) do
-				vim.lsp.config(name, opts)
-			end
+			vim.lsp.enable(servers)
+		end,
+	},
 
-			vim.lsp.enable(loader.lsp_server_names())
+	{
+		"neovim/nvim-lspconfig",
+
+		lazy = false,
+		priority = 100,
+
+		config = function()
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("UserLspAttach", {
+					clear = true,
+				}),
+
+				callback = function(args)
+					local opts = {
+						buffer = args.buf,
+						silent = true,
+					}
+
+					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+					vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
+
+					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+					vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts)
+
+					vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+					vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+					vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+					vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+				end,
+			})
 		end,
 	},
 }

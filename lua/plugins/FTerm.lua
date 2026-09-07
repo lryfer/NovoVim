@@ -4,37 +4,29 @@ return {
     config = function()
       local fterm = require("FTerm")
 
-      local function hl_bg(name)
-        return vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID(name)), "bg#") or "#1e1e1e"
-      end
+      local nvlib = require("novolib")
 
-      local function hl_fg(name)
-        return vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID(name)), "fg#") or "#ffffff"
-      end
+      local shell = nvlib.isOsWindows() and vim.g.windows_terminal or vim.g.linux_terminal
 
-      local normal_bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Normal")), "bg#") or "#1e1e1e"
-      local normal_fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Normal")), "fg#") or "#ffffff"
-      local border_color = "#444444"
-
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = normal_bg, fg = normal_fg })
-      vim.api.nvim_set_hl(0, "FloatBorder", { bg = normal_bg, fg = border_color })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e1e1e", fg = "#ffffff" })
+      vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#1e1e1e", fg = "#444444" })
 
       fterm.setup({
         border = "single",
         dimensions = { height = 0.9, width = 0.9 },
+        cmd = shell,
         win_opts = {
           winblend = 0,
           winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
         },
       })
-
-      vim.keymap.set("n", "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>')
+        vim.keymap.set("n", "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>')
       vim.keymap.set("t", "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
       local command_output = fterm:new({
         border = "double",
         dimensions = { height = 0.8, width = 0.8 },
-        cmd = "bash",
+        cmd = shell,
       })
 
       _G.quick_command = function()
@@ -44,15 +36,15 @@ return {
           end
 
           local buf = vim.api.nvim_create_buf(false, true)
-          vim.api.nvim_buf_set_option(buf, "bufhidden", "wipe")
-          vim.api.nvim_buf_set_option(buf, "filetype", "bash")
+          vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
+          vim.api.nvim_set_option_value("filetype", "text", { buf = buf })
 
           local width = math.floor(vim.o.columns * 0.8)
           local height = math.floor(vim.o.lines * 0.8)
           local row = math.floor((vim.o.lines - height) / 2)
           local col = math.floor((vim.o.columns - width) / 2)
 
-          local win = vim.api.nvim_open_win(buf, true, {
+          vim.api.nvim_open_win(buf, true, {
             relative = "editor",
             width = width,
             height = height,
@@ -64,8 +56,17 @@ return {
 
           vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Running: " .. cmd, "", "---", "" })
 
-          vim.fn.jobstart(cmd, {
+          local exec_cmd
+          if nvlib.isOsWindows() then
+            exec_cmd = { "powershell", "-NoProfile", "-Command", cmd }
+          else
+
+            exec_cmd = { "bash", "-lc", cmd }
+          end
+
+          vim.fn.jobstart(exec_cmd, {
             stdout_buffered = false,
+            stderr_buffered = false,
             on_stdout = function(_, data)
               if data then
                 vim.schedule(function()
@@ -82,17 +83,18 @@ return {
             end,
             on_exit = function(_, exit_code)
               vim.schedule(function()
-                vim.api.nvim_buf_set_lines(buf, -1, -1, false, { "", "---", "Exit code: " .. exit_code, "", "Press 'q' to close" })
+                vim.api.nvim_buf_set_lines(buf, -1, -1, false,
+                  { "", "---", "Exit code: " .. exit_code, "", "Press 'q' to close" })
               end)
             end,
           })
 
-          vim.api.nvim_buf_set_keymap(buf, "n", "q", ":close<CR>", { noremap = true, silent = true })
-          vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", ":close<CR>", { noremap = true, silent = true })
+          vim.keymap.set("n", "q", ":close<CR>", { buffer = buf, silent = true })
+          vim.keymap.set("n", "<Esc>", ":close<CR>", { buffer = buf, silent = true })
         end)
       end
 
-      vim.keymap.set("n", "<leader>x", ":lua quick_command()<CR>", { desc = "Quick command", silent = true })
+      vim.keymap.set("n", "<leader>xo", quick_command, { desc = "Quick command", silent = true })
     end,
   },
 }
