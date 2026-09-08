@@ -27,10 +27,15 @@ return {
 		config = function()
 			local servers = {}
 
-			local language_servers = {
-				vim.g.c_language_server,
-				vim.g.lua_language_server,
-			}
+
+    local language_servers = {
+        vim.g.c_language_server,
+        vim.g.lua_language_server,
+        vim.g.rust_language_server,
+        vim.g.javascript_language_server,
+        vim.g.html_language_server,
+    }
+
 
 			for _, server in ipairs(language_servers) do
 				if server and server ~= "" then

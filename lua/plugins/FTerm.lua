@@ -6,7 +6,7 @@ return {
 
       local nvlib = require("novolib")
 
-      local shell = nvlib.isOsWindows() and vim.g.windows_terminal or vim.g.linux_terminal
+      local shell = nvlib.isOsWindows() and vim.g.windows_terminal or vim.g.posix_terminal
 
       vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e1e1e", fg = "#ffffff" })
       vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#1e1e1e", fg = "#444444" })
@@ -58,12 +58,11 @@ return {
 
           local exec_cmd
           if nvlib.isOsWindows() then
-            exec_cmd = { "powershell", "-NoProfile", "-Command", cmd }
+            exec_cmd = { shell, "-NoProfile", "-Command", cmd }
           else
 
-            exec_cmd = { "bash", "-lc", cmd }
+            exec_cmd = { shell, "-lc", cmd }
           end
-
           vim.fn.jobstart(exec_cmd, {
             stdout_buffered = false,
             stderr_buffered = false,

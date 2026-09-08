@@ -10,14 +10,7 @@
 -- 0.3 NovoVim terminal
 -- 0.4 NovoVim icons
 -- 0.5 NovoVim Lsp
-
-vim.g.c_language_server = "clangd"
-vim.g.lua_language_server = "lua_ls"
-
 -- 06 NovoVim Custom Command
-
-
-
 
 
 
@@ -154,7 +147,6 @@ vim.g.posix_terminal = "bash"
 
 
 -- 0.4 NovoVim icons
-
 vim.g.Mason_Icon_package_installed   = "I"
 vim.g.Mason_Icon_package_pending     = "P"
 vim.g.Mason_Icon_package_package_uninstalled = "R"
@@ -185,9 +177,12 @@ vim.g.nvim_cmp_Icon_Operator = "󰆕"
 vim.g.nvim_cmp_Icon_TypeParameter = "󰅲"
 
 -- 0.5 NovoVim Lsp
-
 vim.g.c_language_server = "clangd"
 vim.g.lua_language_server = "lua_ls"
+vim.g.rust_language_server = "rust_analyzer"
+vim.g.javascript_language_server = "ts_ls"
+vim.g.html_language_server = "html"
+vim.g.css_language_server = "cssls"
 
 -- 06 NovoVim Custom Command
 

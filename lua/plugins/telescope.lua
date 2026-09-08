@@ -20,18 +20,21 @@ return {
       end,
       desc = "Find files",
     },
-
     {
       "<C-g>",
       function()
         local mode = vim.fn.mode()
         local selection = ""
 
+        -- handle the most important feature of forward search
+        -- by selecting a text and opening telescope selected
+        -- text will be yanked in telescope searchbox
         if mode == "v" or mode == "V" or mode == "\22" then
           vim.cmd('normal! "vy')
-          selection = vim.fn.getreg("v"):gsub("\n+$", "")
+          selection = vim.fn.getreg("v")
+            :gsub("\n+$", "")
+            :gsub("\n", " ")
         end
-
         require("telescope.builtin").live_grep({
           default_text = selection,
           additional_args = function()
