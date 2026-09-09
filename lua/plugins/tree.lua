@@ -2,6 +2,9 @@ return {
 	"nvim-tree/nvim-tree.lua",
 	version = "*",
 	lazy = false,
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
+	},
 
 	config = function()
 		require("nvim-tree").setup({
@@ -20,7 +23,7 @@ return {
 
 				icons = {
 					show = {
-						file = false,
+						file = true,
 						folder = true,
 						folder_arrow = true,
 						git = false,
@@ -29,7 +32,7 @@ return {
 			},
 
 			filters = {
-				dotfiles = true,
+				dotfiles = false,
 			},
 		})
 

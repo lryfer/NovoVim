@@ -8,8 +8,8 @@ return {
 
       local shell = nvlib.isOsWindows() and vim.g.windows_terminal or vim.g.posix_terminal
 
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e1e1e", fg = "#ffffff" })
-      vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#1e1e1e", fg = "#444444" })
+--      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e1e1e", fg = "#ffffff" })
+--      vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#1e1e1e", fg = "#444444" })
 
       fterm.setup({
         border = "single",
