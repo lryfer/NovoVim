@@ -10,7 +10,8 @@
 -- 0.3 NovoVim terminal
 -- 0.4 NovoVim icons
 -- 0.5 NovoVim Lsp
--- 0.6 NovoVim Custom Command
+-- 0.6 NovoVim Code Snippets 
+-- 0.7 NovoVim Custom Command
 
 
 
@@ -184,7 +185,78 @@ vim.g.javascript_language_server = "ts_ls"
 vim.g.html_language_server = "html"
 vim.g.css_language_server = "cssls"
 
--- 0.6 NovoVim Custom Command
+-- 0.6 NovoVim Code Snippets 
+
+vim.g.include_language_code_snippets = {
+	-- "html",
+	-- "css",
+	-- "scss",
+	-- "less",
+	-- "javascript",
+	-- "typescript",
+	-- "javascriptreact",
+	-- "typescriptreact",
+	-- "vue",
+	-- "svelte",
+	-- "astro",
+	-- "json",
+	-- "jsonc",
+	-- "yaml",
+	-- "toml",
+	-- "xml",
+	"c",
+	"cpp",
+	-- "cuda",
+	-- "objc",
+	-- "objcpp",
+	-- "rust",
+	-- "go",
+	-- "zig",
+	-- "d",
+	-- "nim",
+	-- "crystal",
+	-- "python",
+	-- "ruby",
+	-- "php",
+	-- "perl",
+	-- "lua",
+	-- "r",
+	-- "julia",
+	-- "java",
+	-- "kotlin",
+	-- "scala",
+	-- "groovy",
+	-- "clojure",
+	-- "swift",
+	-- "dart",
+	-- "elixir",
+	-- "erlang",
+	-- "haskell",
+	-- "ocaml",
+	-- "fsharp",
+	-- "bash",
+	-- "sh",
+	-- "zsh",
+	-- "fish",
+	-- "powershell",
+	-- "sql",
+	-- "plsql",
+	-- "dockerfile",
+	-- "terraform",
+	-- "hcl",
+	-- "markdown",
+	-- "mdx",
+	-- "rst",
+	-- "typst",
+	-- "latex",
+	-- "tex",
+	-- "graphql",
+	-- "proto",
+	-- "vim",
+	-- "vimdoc",
+}
+
+-- 0.7 NovoVim Custom Command
 vim.g.command_nvim_tree_toggle = "<leader>tt"
 vim.g.command_fterm_quickcommand = "<leader>xo"
 vim.g.command_fterm_open = "<A-i>"
@@ -244,13 +316,5 @@ vim.g.command_trouble_symbols = "<leader>cs"
 vim.g.command_trouble_lsp = "<leader>cl"
 vim.g.command_trouble_loclist = "<leader>xL"
 vim.g.command_trouble_qflist = "<leader>xQ"
-
-
-
-
-
-
-
-
 
 

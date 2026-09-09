@@ -3,7 +3,9 @@ return {
 	version = "v2.*",
 	build = "make install_jsregexp",
         config = function()
-          require("luasnip.loaders.from_vscode").lazy_load({include = { "html" }})
+          require("luasnip.loaders.from_vscode").lazy_load({
+            include = vim.g.include_language_code_snippets,
+          })
           local ls = require("luasnip")
           local fmt = require("luasnip.extras.fmt").fmt
           local rep = require("luasnip.extras").rep
@@ -42,6 +44,38 @@ return {
             i(1, "Document Title"), i(2),
           })),
         },
+      })
+
+      ls.add_snippets("c", {
+        s({
+          trig = "main",
+          name = "Main function",
+          dscr = "C main function",
+        }, fmt([[
+      int main(int argc, char *argv[])
+      {{
+        {}
+        return 0;
+      }}
+      ]], {
+          i(1),
+        })),
+      })
+
+      ls.add_snippets("cpp", {
+        s({
+          trig = "main",
+          name = "Main function",
+          dscr = "C++ main function",
+        }, fmt([[
+      int main(int argc, char *argv[])
+      {{
+        {}
+        return 0;
+      }}
+      ]], {
+          i(1),
+        })),
       })
       end;
 }
