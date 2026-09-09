@@ -62,14 +62,6 @@ return {
 			desc = "Help tags",
 		},
 		{
-			vim.g.command_telescope_notify,
-			function()
-				require("telescope").extensions.notify.notify()
-			end,
-			desc = "Notification history",
-		},
-
-		{
 			vim.g.command_telescope_git_diff,
 			function()
 				require("telescope.builtin").git_status()
