@@ -27,15 +27,13 @@ return {
 		config = function()
 			local servers = {}
 
-
-    local language_servers = {
-        vim.g.c_language_server,
-        vim.g.lua_language_server,
-        vim.g.rust_language_server,
-        vim.g.javascript_language_server,
-        vim.g.html_language_server,
-    }
-
+			local language_servers = {
+				vim.g.c_language_server,
+				vim.g.lua_language_server,
+				vim.g.rust_language_server,
+				vim.g.javascript_language_server,
+				vim.g.html_language_server,
+			}
 
 			for _, server in ipairs(language_servers) do
 				if server and server ~= "" then
@@ -75,21 +73,96 @@ return {
 						silent = true,
 					}
 
-					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-					vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_hover,
+						vim.lsp.buf.hover,
+						opts
+					)
 
-					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-					vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts)
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_definition,
+						vim.lsp.buf.definition,
+						opts
+					)
 
-					vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-					vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-					vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-					vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_declaration,
+						vim.lsp.buf.declaration,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_implementation,
+						vim.lsp.buf.implementation,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_references,
+						vim.lsp.buf.references,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_type_definition,
+						vim.lsp.buf.type_definition,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_code_action,
+						vim.lsp.buf.code_action,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_rename,
+						vim.lsp.buf.rename,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_signature_help,
+						vim.lsp.buf.signature_help,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_diagnostic_prev,
+						vim.diagnostic.goto_prev,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_diagnostic_next,
+						vim.diagnostic.goto_next,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_diagnostic_float,
+						vim.diagnostic.open_float,
+						opts
+					)
+
+					vim.keymap.set(
+						"n",
+						vim.g.command_lsp_diagnostic_loclist,
+						vim.diagnostic.setloclist,
+						opts
+					)
 				end,
 			})
 		end,

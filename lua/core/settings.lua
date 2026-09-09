@@ -4,17 +4,17 @@
 
 
 -- Section list of this file you can search:
--- 0.0 nvim global settings
--- 0.1 neovide global settings
+-- 0.0 Neovim global settings
+-- 0.1 Neovide global settings
 -- 0.2 NovoVim parameters :
 -- 0.3 NovoVim terminal
 -- 0.4 NovoVim icons
 -- 0.5 NovoVim Lsp
--- 06 NovoVim Custom Command
+-- 0.6 NovoVim Custom Command
 
 
 
--- 0.0 nvim global settings
+-- 0.0 Neovim global settings
 -- Leader key modifier
 vim.g.mapleader = " "
 
@@ -114,7 +114,7 @@ vim.opt.pumheight = 10
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 
--- 0.1 neovide global settings
+-- 0.1 Neovide global settings
 if vim.g.neovide then
   vim.o.guifont = "Iosevka Nerd Font Mono:14"
   vim.g.neovide_title_background_color = string.format(
@@ -184,7 +184,68 @@ vim.g.javascript_language_server = "ts_ls"
 vim.g.html_language_server = "html"
 vim.g.css_language_server = "cssls"
 
--- 06 NovoVim Custom Command
+-- 0.6 NovoVim Custom Command
+vim.g.command_nvim_tree_toggle = "<leader>tt"
+vim.g.command_fterm_quickcommand = "<leader>xo"
+vim.g.command_fterm_open = "<A-i>"
+vim.g.command_conform_format_buffer = "<leader>cf"
+vim.g.command_telescope_find_file = "<C-f>"
+vim.g.command_telescope_live_grep = "<C-g>"
+vim.g.command_telescope_find_buffer = "<C-b>"
+vim.g.command_telescope_help_tags = "<C-h>"
+vim.g.command_telescope_notify = "<C-n>"
+vim.g.command_telescope_git_diff = "<leader>gd"
+vim.g.command_telescope_git_commits = "<leader>gc"
+vim.g.command_telescope_git_branches = "<leader>gb"
+vim.g.command_telescope_git_stash = "<leader>gs"
+vim.g.command_gitsigns_next_hunk = "]h"
+vim.g.command_gitsigns_prev_hunk = "[h"
+vim.g.command_gitsigns_stage_hunk = "<leader>hs"
+vim.g.command_gitsigns_reset_hunk = "<leader>hr"
+vim.g.command_gitsigns_undo_stage_hunk = "<leader>hu"
+vim.g.command_gitsigns_stage_buffer = "<leader>hS"
+vim.g.command_gitsigns_preview_hunk = "<leader>hp"
+vim.g.command_gitsigns_blame_line = "<leader>hb"
+vim.g.command_gitsigns_diff_this = "<leader>hd"
+vim.g.command_gitsigns_git_status = "<leader>gs"
+vim.g.command_gitsigns_git_branches = "<leader>gb"
+vim.g.command_lsp_hover = "K"
+vim.g.command_lsp_definition = "gd"
+vim.g.command_lsp_declaration = "gD"
+vim.g.command_lsp_implementation = "gi"
+vim.g.command_lsp_references = "gr"
+vim.g.command_lsp_type_definition = "gt"
+vim.g.command_lsp_code_action = "<leader>ca"
+vim.g.command_lsp_rename = "<leader>rn"
+vim.g.command_lsp_signature_help = "<leader>sh"
+vim.g.command_lsp_diagnostic_prev = "[d"
+vim.g.command_lsp_diagnostic_next = "]d"
+vim.g.command_lsp_diagnostic_float = "<leader>e"
+vim.g.command_lsp_diagnostic_loclist = "<leader>q"
+vim.g.command_cmp_select_next = "<C-n>"
+vim.g.command_cmp_select_prev = "<C-p>"
+vim.g.command_cmp_scroll_docs_down = "<C-d>"
+vim.g.command_cmp_scroll_docs_up = "<C-u>"
+vim.g.command_cmp_complete = "<C-Space>"
+vim.g.command_cmp_confirm = "<CR>"
+vim.g.command_cmp_next_or_fallback = "<Tab>"
+vim.g.command_cmp_prev_or_fallback = "<S-Tab>"
+vim.g.command_refactoring_extract_function = "<leader>re"
+vim.g.command_refactoring_extract_to_file = "<leader>rf"
+vim.g.command_refactoring_extract_variable = "<leader>rv"
+vim.g.command_refactoring_inline_variable = "<leader>ri"
+vim.g.command_refactoring_inline_function = "<leader>rI"
+vim.g.command_refactoring_extract_block = "<leader>rb"
+vim.g.command_refactoring_extract_block_to_file = "<leader>rbf"
+vim.g.command_lspsignature_togglekey = "<C-k>"
+vim.g.command_trouble_diagnostics = "<leader>xx"
+vim.g.command_trouble_buffer_diagnostics = "<leader>xX"
+vim.g.command_trouble_symbols = "<leader>cs"
+vim.g.command_trouble_lsp = "<leader>cl"
+vim.g.command_trouble_loclist = "<leader>xL"
+vim.g.command_trouble_qflist = "<leader>xQ"
+
+
 
 
 

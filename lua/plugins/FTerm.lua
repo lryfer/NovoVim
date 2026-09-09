@@ -20,8 +20,8 @@ return {
           winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
         },
       })
-        vim.keymap.set("n", "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>')
-      vim.keymap.set("t", "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+        vim.keymap.set("n", vim.g.command_fterm_open, '<CMD>lua require("FTerm").toggle()<CR>')
+      vim.keymap.set("t", vim.g.command_fterm_open, '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
       local command_output = fterm:new({
         border = "double",
@@ -93,7 +93,7 @@ return {
         end)
       end
 
-      vim.keymap.set("n", "<leader>xo", quick_command, { desc = "Quick command", silent = true })
+      vim.keymap.set("n", vim.g.command_fterm_quickcommand, quick_command, { desc = "Quick command", silent = true })
     end,
   },
 }

@@ -8,7 +8,7 @@ return {
 	},
 	keys = {
     {
-      "<C-f>",
+      vim.g.command_telescope_find_file,
       function()
         local ok = pcall(require("telescope.builtin").git_files, {
           show_untracked = true,
@@ -21,7 +21,7 @@ return {
       desc = "Find files",
     },
     {
-      "<C-g>",
+      vim.g.command_telescope_live_grep,
       function()
         local mode = vim.fn.mode()
         local selection = ""
@@ -46,21 +46,21 @@ return {
       desc = "Live grep",
     },
 		{
-			"<C-b>",
+			vim.g.command_telescope_find_buffer,
 			function()
 				require("telescope.builtin").buffers()
 			end,
 			desc = "Find buffers",
 		},
 		{
-			"<C-h>",
+			vim.g.command_telescope_help_tags,
 			function()
 				require("telescope.builtin").help_tags()
 			end,
 			desc = "Help tags",
 		},
 		{
-			"<C-n>",
+			vim.g.command_telescope_notify,
 			function()
 				require("telescope").extensions.notify.notify()
 			end,
@@ -68,28 +68,28 @@ return {
 		},
 
 		{
-			"<leader>gd",
+			vim.g.command_telescope_git_diff,
 			function()
 				require("telescope.builtin").git_status()
 			end,
 			desc = "Git diff (changed files)",
 		},
 		{
-			"<leader>gc",
+			vim.g.command_telescope_git_commits,
 			function()
 				require("telescope.builtin").git_commits()
 			end,
 			desc = "Git commits",
 		},
 		{
-			"<leader>gb",
+			vim.g.command_telescope_git_branches,
 			function()
 				require("telescope.builtin").git_branches()
 			end,
 			desc = "Git branches",
 		},
 		{
-			"<leader>gs",
+			vim.g.command_telescope_git_stash,
 			function()
 				require("telescope.builtin").git_stash()
 			end,

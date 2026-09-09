@@ -67,7 +67,7 @@ return {
 		end
 		vim.keymap.set(
 			"n",
-			"<leader>tt",
+			vim.g.command_nvim_tree_toggle,
 			vim.cmd.NvimTreeToggle,
 			{ desc = "Toggle File Tree" }
 		)
