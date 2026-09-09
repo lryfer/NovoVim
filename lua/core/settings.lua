@@ -316,5 +316,6 @@ vim.g.command_trouble_symbols = "<leader>cs"
 vim.g.command_trouble_lsp = "<leader>cl"
 vim.g.command_trouble_loclist = "<leader>xL"
 vim.g.command_trouble_qflist = "<leader>xQ"
+vim.g.command_comment_toggle_comment = "<A-c>"
 
 
