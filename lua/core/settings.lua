@@ -11,7 +11,8 @@
 -- 0.4 NovoVim icons
 -- 0.5 NovoVim Lsp
 -- 0.6 NovoVim Code Snippets 
--- 0.7 NovoVim Custom Command
+-- 0.7 NovoVim Treesitter Sintax Hilighting
+-- 0.8 NovoVim Custom Command
 
 
 
@@ -256,7 +257,83 @@ vim.g.include_language_code_snippets = {
 	-- "vimdoc",
 }
 
--- 0.7 NovoVim Custom Command
+-- 0.7 NovoVim Treesitter Sintax Hilighting
+vim.g.treesitter_language_ensure_installed = {
+    "lua",
+    "vim",
+    "vimdoc",
+    "query",
+    "markdown",
+    "markdown_inline",
+    -- "html",
+    -- "css",
+    -- "scss",
+    -- "less",
+    -- "javascript",
+    -- "typescript",
+    -- "tsx",
+    -- "vue",
+    -- "svelte",
+    -- "astro",
+    -- "json",
+    -- "jsonc",
+    -- "yaml",
+    -- "toml",
+    -- "xml",
+    -- "csv",
+    -- "graphql",
+    -- "proto",
+    -- "dockerfile",
+    -- "terraform",
+    -- "hcl",
+    "c",
+    "cpp",
+    -- "cuda",
+    -- "objc",
+    -- "objcpp",
+    -- "rust",
+    -- "go",
+    -- "gomod",
+    -- "zig",
+    -- "d",
+    -- "nim",
+    -- "crystal",
+    -- "python",
+    -- "ruby",
+    -- "php",
+    -- "perl",
+    -- "r",
+    -- "julia",
+    -- "java",
+    -- "kotlin",
+    -- "scala",
+    -- "groovy",
+    -- "clojure",
+    -- "swift",
+    -- "dart",
+    -- "elixir",
+    -- "erlang",
+    -- "haskell",
+    -- "ocaml",
+    -- "fsharp",
+    -- "c_sharp",
+    -- "bash",
+    -- "sh",
+    -- "zsh",
+    -- "fish",
+    -- "powershell",
+    -- "sql",
+    -- "plsql",
+    -- "make",
+    -- "cmake",
+    -- "typst",
+    -- "latex",
+    -- "tex",
+    -- "rst",
+    -- "comment",
+}
+
+-- 0.8 NovoVim Custom Command
 vim.g.command_nvim_tree_toggle = "<leader>tt"
 vim.g.command_fterm_quickcommand = "<leader>xo"
 vim.g.command_fterm_open = "<A-i>"

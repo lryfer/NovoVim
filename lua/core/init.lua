@@ -29,7 +29,10 @@ vim.diagnostic.config({
 })
 
 -- Import everything in custom_utility folder
-for _, file in ipairs(vim.fn.globpath(vim.fn.stdpath("config") .. "/lua/tools", "*.lua", false, true)) do
-	local mod = file:match(".+/lua/(.+)%.lua$"):gsub("/", ".")
-	require(mod)
+local lua_dir = vim.fn.stdpath("config") .. "/lua/tools"
+for _, file in ipairs(vim.fn.globpath(lua_dir, "**/*.lua", false, true)) do
+	local relative = file:sub(#lua_dir + 2)
+	local module = relative:gsub("[/\\]", "."):gsub("%.lua$", "")
+	require("tools." .. module)
 end
+
